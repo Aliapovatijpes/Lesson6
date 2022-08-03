@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: onix
-# You can aply this command to change  current namespace to "onix", after manifest executing
-# kubectl config set-context --current --namespace=onix
