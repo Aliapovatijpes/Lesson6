@@ -5,6 +5,29 @@ metadata:
 
 ---
 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: phpmyadmin-ingress
+  namespace: onix
+  annotations:
+   nginx.ingress.kubernetes.io/affinity: "cookie"
+   nginx.ingress.kubernetes.io/affinity-mode: persistent
+
+spec:
+  rules:
+  - host: intern.com
+    http: 
+      paths:
+      - path: /
+        pathType: Prefix 
+        backend:
+          service:
+            name: phpmyadmin-service
+            port:
+              number: 80
+---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -130,27 +153,3 @@ spec:
            value: "3306"
          - name: MYSQL_ROOT_PASSWORD
            value: rootpass
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: phpmyadmin-ingress
-  namespace: onix
-  annotations:
-   nginx.ingress.kubernetes.io/affinity: "cookie"
-   nginx.ingress.kubernetes.io/affinity-mode: persistent
-
-spec:
-  rules:
-  - host: intern.com
-    http: 
-      paths:
-      - path: /
-        pathType: Prefix 
-        backend:
-          service:
-            name: phpmyadmin-service
-            port:
-              number: 80
